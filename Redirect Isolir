@@ -1,0 +1,7 @@
+Silahkan sesuaikan dengan address-list Pelanggan Isolir masing-masing...
+
+/ip firewall nat
+add action=dst-nat chain=dstnat comment="REDIRECT ISOLIR" protocol=tcp \
+    src-address-list=ISOLIR to-addresses=103.80.82.23
+add action=dst-nat chain=dstnat dst-port=!53 protocol=udp src-address-list=\
+    ISOLIR to-addresses=103.80.82.23
