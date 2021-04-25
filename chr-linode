@@ -1,0 +1,3 @@
+wget http://download2.mikrotik.com/routeros/6.44.3/chr-6.44.3.img.zip
+unzip chr-6.44.3.img.zip
+dd if=chr-6.44.3.img of=/dev/sda bs=1M iflag=fullblock
