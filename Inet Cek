@@ -1,0 +1,9 @@
+/system scheduler
+add interval=5s name=INET1 on-event=":if ( [/ip address get [find interface=\"\
+    INET1\"] address] in 10.0.0.0/8) do={ \r\
+    \n/int pppoe-client disable \"INET1\";\r\
+    \ndelay 10\r\
+    \n/int pppoe-client en \"INET1\";\r\
+    \n}\r\
+    \n" policy=reboot,read,write,test,password,sniff,sensitive,romon \
+    start-time=startup
