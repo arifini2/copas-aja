@@ -1,0 +1,10 @@
+/system scheduler
+add interval=5m name="IPIP CEK" on-event=":if ( [/interface pppoe-client get J\
+    SN-IPIP-1 running] = false ) do={\r\
+    \nlog error (\"IPIP DOWN, Mencoba Reconnecting Tunnel ....\");\r\
+    \n/int pppoe-client disable \"INET1\";\r\
+    \ndelay 5\r\
+    \n/int pppoe-client en \"INET1\";\r\
+    \n}" policy=\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
+    start-time=startup
