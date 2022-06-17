@@ -1,0 +1,15 @@
+auto-write enable
+auto-write 00:00:00  everyday
+file-server auto-backup cfg server-index 1 ipaddress 136.1.1.1 ftp  user zte password zte
+file-server auto-backup cfg server-index 2 ipaddress 136.1.1.1 ftp  user zte password zte
+auto-backup period cfg 3:0:0 jan 26 2022 interval 1
+autoupload Configure-file enable
+interface mng1
+ip address 136.1.1.100 255.255.255.0
+boot-server 136.1.1.1
+boot-username zte
+config-filename startrun.dat
+imgfile-location local
+boot-password zte
+end
+write
