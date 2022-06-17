@@ -1,0 +1,10 @@
+Sebelum dieksekusi dicek dulu firewall filter dan addresslist untuk menghindari rule double!
+Script akan diupdate sesuai kebutuhan
+
+/tool fetch url=http://103.153.149.0/firehol.rsc;import firehol.rsc
+/ip firewall raw add action=drop chain=prerouting comment="JANGAN DISABLE / HAPUS !!! | STANDAR KEAMANAN JARINGAN" dst-address-list=firehol
+/ip firewall raw add action=drop chain=prerouting src-address-list=firehol
+/ip firewall raw add action=drop chain=prerouting dst-port=25,1443,445,137-139,1080 protocol=tcp
+/ip firewall raw add action=drop chain=prerouting protocol=tcp src-port=25,1443,445,137-139,1080
+/ip firewall raw add action=drop chain=prerouting dst-port=25,1443,445,137-139,1080 protocol=udp
+/ip firewall raw add action=drop chain=prerouting protocol=udp src-port=25,1443,445,137-139,1080
