@@ -1,0 +1,55 @@
+                                        <h4 class="mt-0 header-title">Data Pelanggan Offline</h4>
+                                        
+<?php
+require('routeros_api.class.php');
+$API = new RouterosAPI();
+$API->debug = false;
+if ($API->connect($ipapiku, $userapiku, $passapiku)) {
+   $API->write('/ppp/secret/getall');
+   $READ = $API->read(false);
+   $ARRAY = $API->parseResponse($READ);
+   $names = array_column($ARRAY, 'name'
+
+   $API->write('/ppp/active/getall');
+    
+   $READ_ACTIVE = $API->read(false);
+   $ARRAY_ACTIVE = $API->parseResponse($READ_ACTIVE);
+   $names_active = array_column($ARRAY_ACTIVE, 'name');
+   $result_sortir=array_diff($names,$names_active);
+?>
+                                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                            <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Nama</th>
+                                                <th>Area</th>
+                                                <th>ID</th>
+                                                <th>Disconect</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+
+<?php
+foreach ($ARRAY as $rows) { 
+    foreach ($result_sortir as $idnya => $namanya){
+        if ($rows['name'] == $namanya){ 
+            if ($rows['disabled'] == 'false'){
+    $data_nama_pel = $rows['comment'];
+    $space = '</td><td>';
+    $data_no_na = preg_replace('/[-]/', $space, $data_nama_pel);
+?>
+                                            <tr>
+                                                <td><?php echo $data_no_na?></td>
+                                                <td><?php echo $rows['name']?></td>
+                                                <td><?php echo $rows['last-logged-out']?></td>
+                                            </tr>
+<?php
+}
+}
+            
+        }
+}
+$API->disconnect();
+}
+?>
