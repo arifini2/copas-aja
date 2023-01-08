@@ -8,7 +8,7 @@ if ($API->connect($ipapiku, $userapiku, $passapiku)) {
    $API->write('/ppp/secret/getall');
    $READ = $API->read(false);
    $ARRAY = $API->parseResponse($READ);
-   $names = array_column($ARRAY, 'name'
+   $names = array_column($ARRAY, 'name');
 
    $API->write('/ppp/active/getall');
     
