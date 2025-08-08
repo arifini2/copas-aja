@@ -1,0 +1,52 @@
+## Install Apache Webserver, sebatas ada webserver untuk install ssl
+apt install apache2
+## Install certbot untuk ssl
+apt install certbot python3-certbot-apache -y
+## install ssl domainnya
+certbot --apache -d domainnya.com
+## downlad installer ooklaserver
+wget https://install.speedtest.net/ooklaserver/ooklaserver.sh
+## change installer supaya bisa dieksekusi
+chmod a+x ooklaserver.sh
+## jalankan installer untuk menginstal
+./ooklaserver.sh install
+## stop ooklaserver via dari script
+./ooklaserver.sh stop
+## Edit file rc.local untuk menjalankan ookla server startrun
+nano /etc/rc.local
+# ./[user]/OoklaServer --daemon
+## Buat file daemon service untuk ookla
+nano /etc/systemd/system/ookla.service
+# [Service]
+# WorkingDirectory=/[user]/
+# Type=forking
+# KillMode=process
+# ExecStart=/bin/bash /[user]/ooklaserver.sh start
+# TimeoutStartSec=30
+# TimeoutStopSec=60
+# Restart=always
+# [Install]
+# WantedBy=multi-user.target
+systemctl daemon-reload
+## aktifkan service ookla
+systemctl enable ookla.service
+## cek apakah sukses dan berjalan normal
+systemctl status ookla.service
+## edit config ookla properties
+nano OoklaServer.properties
+## perhatikan config command dibawah, sesuaikan kebutuhan
+# OoklaServer.ssl.useLetsEncrypt
+# OoklaServer.enableAutoUpdate
+# openSSL.server.certificateFile
+# openSSL.server.privateKeyFile
+## start service ookla
+systemctl start ookla.service
+## install ufw / firewall & allow port yg diperlukan saja
+apt install ufw
+ufw allow 80
+ufw allow 443
+ufw allow 8080
+ufw allow 5060
+ufw deny 2222
+ufw enable
+## sekian setelah install pasti lupa maintenance
